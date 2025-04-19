@@ -1,0 +1,29 @@
+services:
+  app-dev:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: ["bun", "run", "dev"]
+    environment:
+      - NODE_ENV=development
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/src
+        - action: rebuild
+          path: package.json
+
+  app-prod:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production 
