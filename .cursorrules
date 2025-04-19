@@ -1,0 +1,124 @@
+{
+  "rules": [
+    {
+      "pattern": "**/*.ts",
+      "rules": [
+        {
+          "type": "style",
+          "rule": "no-console",
+          "level": "warning",
+          "options": {
+            "allow": ["error", "warn", "info"]
+          }
+        },
+        {
+          "type": "style",
+          "rule": "explicit-function-return-type",
+          "level": "warning"
+        },
+        {
+          "type": "style",
+          "rule": "no-unused-vars",
+          "level": "error"
+        },
+        {
+          "type": "style",
+          "rule": "no-explicit-any",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "pattern": "**/*.test.ts",
+      "rules": [
+        {
+          "type": "style",
+          "rule": "no-console",
+          "level": "off"
+        }
+      ]
+    }
+  ],
+  "ai_settings": {
+    "project_context": {
+      "description": "JSON-RPC 2.0 server implementation using Hono and Bun",
+      "architecture": {
+        "type": "modular",
+        "components": [
+          {
+            "name": "RPC Router",
+            "description": "Core router handling JSON-RPC method dispatching",
+            "location": "src/rpcRouter.ts"
+          },
+          {
+            "name": "Method Handlers",
+            "description": "Individual RPC method implementations",
+            "location": "src/handlers/*.ts"
+          }
+        ]
+      }
+    },
+    "code_generation": {
+      "preferences": {
+        "style": {
+          "imports": "type-imports-preferred",
+          "async_style": "async-await",
+          "error_handling": "typed-errors"
+        },
+        "testing": {
+          "framework": "vitest",
+          "style": "behavior-driven"
+        }
+      }
+    },
+    "documentation": {
+      "preferred_style": "jsdoc",
+      "required_sections": ["Parameters", "Returns", "Example"],
+      "examples": {
+        "include_curl": true,
+        "include_typescript": true
+      },
+      "languages": {
+        "primary": "ja",
+        "supported": ["ja", "en"],
+        "code_comments": "en"
+      }
+    },
+    "conventions": {
+      "naming": {
+        "handlers": "{methodName}.ts",
+        "tests": "{methodName}.test.ts",
+        "interfaces": "I{Name}",
+        "types": "T{Name}"
+      },
+      "file_organization": {
+        "handlers_directory": "src/handlers",
+        "tests_directory": "test"
+      }
+    },
+    "dependencies": {
+      "preferred": {
+        "runtime": "bun",
+        "framework": "hono",
+        "validation": "zod",
+        "testing": "vitest"
+      },
+      "versioning": {
+        "strategy": "fixed",
+        "update_frequency": "security-only"
+      }
+    }
+  },
+  "prompts": {
+    "new_handler": {
+      "template": "Create a new JSON-RPC method handler for {methodName} with the following requirements:\n- Input validation using Zod\n- Proper error handling\n- Unit tests\n- Documentation with examples",
+      "files_to_create": [
+        "src/handlers/{methodName}.ts",
+        "test/{methodName}.test.ts"
+      ]
+    },
+    "add_validation": {
+      "template": "Add Zod validation schema for the following interface:\n{interface}"
+    }
+  }
+} 
